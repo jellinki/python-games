@@ -1,0 +1,62 @@
+import random
+
+class Character:
+    def __init__(self, name, health, attack, defense):
+        self.name = name
+        self.health = health
+        self.attack = attack
+        self.defense = defense
+
+    def take_damage(self, damage):
+        actual_damage = max(5, damage - self.defense)
+        self.health -= actual_damage
+        print(f"{self.name} takes {actual_damage} damage!")
+
+    def is_alive(self):
+        return self.health > 0
+
+class Enemy(Character):
+    def __init__(self, name, health, attack, defense):
+        super().__init__(name, health, attack, defense)
+
+def main():
+    while True:  # Add a loop here to allow replay
+        player = Character("hero", health=100, attack=15, defense=10)
+        enemy = Enemy("orc", health=50, attack=10, defense=5)
+
+        print("welcome to bad angband!")
+        print(f"whoa, you encounter a {enemy.name}!")
+
+        while player.is_alive() and enemy.is_alive():
+            action = input("attack, run, or cry? ").lower()
+
+            if action == "attack":
+                player_attack = random.randint(1, player.attack)
+                enemy_attack = random.randint(1, enemy.attack)
+
+                enemy.take_damage(player_attack)
+                player.take_damage(enemy_attack)
+            elif action == "run":
+                print("you run away!")
+                break
+            elif action == "cry":
+                enemy_attack = random.randint(1, enemy.attack)
+                player.take_damage(enemy_attack)
+            else:
+                print("oops, can't do that! type 'attack', 'run', or 'cry'.")
+
+            print(f"your health: {player.health}")
+            print(f"enemy health: {enemy.health}")
+
+        if player.is_alive():
+            print(f"congratulations! you defeated the {enemy.name}!")
+        else:
+            print("you were defeated. rip!")
+
+        replay = input("wanna play again? (yes/no): ").lower()
+        if replay != "yes":
+            print("thanks for playing! :D")
+            break
+
+if __name__ == "__main__":
+    main()

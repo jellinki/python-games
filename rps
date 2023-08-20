@@ -1,0 +1,36 @@
+import random
+
+def get_user_choice():
+    choice = input("choose rock, paper, or scissors: ").lower()
+    while choice not in ["rock", "paper", "scissors"]:
+        choice = input("uh, no. rock, paper, or scissors? ").lower()
+    return choice
+
+def get_computer_choice():
+    return random.choice(["rock", "paper", "scissors"])
+
+def determine_winner(user_choice, computer_choice):
+    if user_choice == computer_choice:
+        return "wow, a draw!"
+    elif user_choice == "rock":
+        return "you win!" if computer_choice == "scissors" else "i win!"
+    elif user_choice == "paper":
+        return "you win!" if computer_choice == "rock" else "i win!"
+    else: user_choice == "scissors"
+    return "you win!" if computer_choice == "paper" else "i win!"
+
+def play_game():
+    print("let's play rock-paper-scissors!")
+    while True:
+        user_choice = get_user_choice()
+        computer_choice = get_computer_choice()
+        print(f"you chose {user_choice}, and i chose {computer_choice}.")
+        result = determine_winner(user_choice, computer_choice)
+        print(result)
+        
+        replay = input("wanna play again? (yes/no): ").lower()
+        if replay != "yes":
+            print("thanks for playing! :D")
+            break
+
+play_game()
